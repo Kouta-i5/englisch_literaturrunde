@@ -40,48 +40,42 @@ If a figure is based on the attached paper, use it conceptually and redesign it 
 Create only the central result figure for Slide 13.
 
 Figure theme:
-Downstream classification performance improvement with EyeDiff augmentation.
+Image quality evaluation results of EyeDiff-generated images.
 
 Layout:
-Two side-by-side grouped bar charts.
+Left:
+Horizontal bar chart titled:
+VQAScore
 
-Left chart title:
-Rare Diseases dataset
+Use exact values:
+OCT-based disease detection: 0.822
+CFP-based multi-category diagnosis: 0.776
+Multimodal rare disease diagnosis: 0.670
 
-Bars:
-RETFound baseline
-AUROC 0.871
-AUPR 0.439
+Right:
+Turing test result panel.
 
-EyeDiff
-AUROC 0.919
-AUPR 0.530
+Show two large numeric callout boxes:
+Grader 1
+62.00%
 
-Right chart title:
-OphthalWeChat dataset
+Grader 2
+66.00%
 
-Bars:
-RETFound baseline
-AUROC 0.613
-AUPR 0.397
+Label:
+Generated images mistaken for real
 
-EyeDiff
-AUROC 0.663
-AUPR 0.439
-
-Use separate bars for AUROC and AUPR within each chart.
-Make baseline bars light gray.
-Make EyeDiff bars dark navy.
-Show exact values above each bar.
-
-Bottom small annotation:
-Synthetic augmentation improved rare-disease diagnosis.
+Bottom:
+Small note:
+Artifacts: color tone / lesion boundary / noise
 
 Style:
 Pure white background.
-Academic bar chart style.
+Academic chart style.
 Black axes.
+Dark navy bars.
 Gray grid lines.
-Dark navy emphasis.
-Use exact values only.
-No extra numbers.
+White callout boxes with black outlines.
+Use exact numbers only.
+Do not invent extra values.
+Generate only this figure, not a full slide.

@@ -20,7 +20,7 @@ Use mostly black, dark gray, and thin gray lines.
 Most boxes should have white fill with black or dark gray outlines.
 Use gray or black arrows.
 Use dotted boxes only for latent space, diffusion process, or token embedding groups.
-Use dark navy only for section labels, model names, or key headings.
+Use dark navy only for section labels or key headings.
 Use red only for “EyeDiff” and “Cross-attention”.
 Do not use blue or pale blue filled backgrounds.
 Do not use colored header bands.
@@ -29,12 +29,29 @@ Do not add a slide title.
 Use 16:9 aspect ratio.
 Leave enough empty margin.
 
-Typography:
-Use short and readable labels.
-Use English labels mainly inside the figure.
-Japanese explanatory text will be added later in PowerPoint.
-English letters, numbers, model names, dataset names, and abbreviations should use Arial style.
+Typography — IMPORTANT:
+All descriptive labels inside the figure must be written in **Japanese**.
+Use MS PGothic style for Japanese text.
+Keep standard technical module names in **English** (see list below).
+Use Arial style for English technical terms, numbers, and abbreviations such as CFP, t=0, token 1.
 Avoid tiny text.
+Do not mix English descriptive phrases if a Japanese equivalent is provided below.
+
+Labels to keep in English (do not translate):
+- EyeDiff
+- Stable Diffusion v1.5-based
+- Latent Diffusion Model
+- VAE Encoder
+- VAE Decoder
+- CLIP Text Encoder
+- U-Net
+- Cross-attention
+- CFP
+- token 1, token 2, token 3, ...
+- t = 0, t = 1, t = k, t = T
+
+Example text prompt inside figure (keep English, as in paper):
+“fundus image, glaucoma”
 
 Medical image thumbnail style:
 CFP / fundus thumbnails should be realistic orange-red color fundus-like images.
@@ -54,62 +71,63 @@ Use only one VAE Decoder on the right.
 Layout:
 Two separate input streams on the left.
 
-Upper left stream:
-Input ophthalmic image
+Upper left stream (use these exact Japanese labels):
+入力眼科画像（例：CFP）
 → VAE Encoder
-→ Clean image latent
+→ クリーンな画像潜在表現
 
 Use one color fundus thumbnail for the input image.
 
-Lower left stream:
-Text prompt
+Lower left stream (use these exact Japanese labels):
+テキストプロンプト
 “fundus image, glaucoma”
 → CLIP Text Encoder
-→ Token embeddings
+→ トークン埋め込み
 
 Represent token embeddings as a row of small vertical token boxes:
 [token 1] [token 2] [token 3] [...]
 
-Add a small label:
-Text token embeddings
+Add a small Japanese label above or beside the token row:
+テキストトークン埋め込み
 
 Center:
 A large white outlined block labeled:
-EyeDiff
-Stable Diffusion v1.5-based
-Latent Diffusion Model
-
-Use red only for “EyeDiff”.
-Use dark navy for “Stable Diffusion v1.5-based” and “Latent Diffusion Model”.
+EyeDiff（red text only for EyeDiff）
+Stable Diffusion v1.5-based（dark navy）
+Latent Diffusion Model（dark navy）
 
 Inside the EyeDiff block, clearly split into two horizontal lanes.
 
-Top lane:
-Forward noising process
-Label:
-training
+Top lane (training / forward noising):
+Section title:
+順方向ノイズ付加過程
 
-Flow:
-Clean image latent
-→ add noise
-→ noisy latent
-→ more noise
-→ pure noise
+Small lane label in corner:
+学習
+
+Flow labels in Japanese:
+クリーン潜在表現（t = 0）
+→ ノイズ付加（t = 1）
+→ ノイズ増加（t = k）
+→ 純粋ノイズ（t = T）
 
 Use small latent grid thumbnails that gradually become noisier from left to right.
 Use arrows pointing left to right.
+Optional timeline under the lane:
+t = 0 → t = 1 → … → t = k → t = T
 
-Bottom lane:
-Reverse denoising process
-Label:
-generation
+Bottom lane (generation / reverse denoising):
+Section title:
+逆方向ノイズ除去過程
 
-Flow:
-random noise
-→ U-Net denoising step t
-→ U-Net denoising step t-1
-→ U-Net denoising step 0
-→ denoised latent
+Small lane label in corner:
+生成
+
+Flow labels in Japanese:
+ランダムノイズ（t = T）
+→ ステップ t の潜在表現
+→ ステップ t-1 の潜在表現
+→ ノイズ除去後潜在表現（t = 0）
 
 Use small latent grid thumbnails that gradually become clearer from left to right.
 Use arrows pointing left to right.
@@ -118,8 +136,8 @@ U-Net and Cross-attention:
 Place a large U-Net block in the reverse denoising lane.
 Inside the U-Net block, draw several small red Cross-attention modules at multiple depths.
 Show token embeddings entering these red Cross-attention modules with red arrows.
-Label the red pathway:
-Text conditioning
+Label the red pathway in Japanese:
+テキスト条件付け
 
 Important:
 Make it visually clear that text token embeddings condition the denoising U-Net through Cross-attention.
@@ -128,20 +146,22 @@ Do not show text embedding going directly to the VAE Decoder.
 Do not show text embedding going directly to the final image.
 Do not show the image latent going into the CLIP Text Encoder.
 
-Right:
-Denoised latent
+Right output path (use these exact Japanese labels):
+ノイズ除去後潜在表現
 → VAE Decoder
-→ Generated ophthalmic image
+→ 生成眼科画像（例：CFP）
 
 Use one realistic orange-red fundus-like thumbnail as the generated image.
 
-Bottom small legend:
-solid arrow = data flow
-dashed arrow = skip connection
-red arrow = text conditioning
-red box = Cross-attention
+Bottom small legend (all in Japanese):
+実線矢印 ＝ データの流れ
+破線矢印 ＝ スキップ接続（U-Net）
+赤矢印 ＝ テキスト条件付け
+赤枠 ＝ Cross-attention
+点線枠 ＝ 潜在空間（拡散過程）
 
 Keep labels short and readable.
-Avoid dense mathematical notation.
+Avoid dense mathematical notation beyond t = 0, t = 1, t = k, t = T.
 Make the forward noising process and reverse denoising process visually obvious.
 Make the CLIP Text Encoder, token embeddings, and Cross-attention mechanism visually explicit and architecturally correct.
+All descriptive text in the final figure must be Japanese except for the English technical terms listed above.

@@ -4,11 +4,15 @@
 
 本リポジトリは、医療AI研究室の英文抄読会で使用する日本語スライドを作成するための作業用リポジトリである。
 
+**スライド構成・スクリプトの正**：[`英文抄読会_池口晃太_M2.pptx`](英文抄読会_池口晃太_M2.pptx) および発表者が添付するスライド画像。`assets/` は生成図などの素材置き場であり、構成の根拠にしない（詳細は [`assets/README.md`](assets/README.md)）。
+
 発表対象論文は以下である。
 
 **Boosting foundation models for rare eye disease diagnosis via a multimodal text-to-image generative framework**  
 Ruoyu Chen, Weiyi Zhang, Bowen Liu, et al.  
 npj Digital Medicine, 2026
+
+
 
 本論文では、眼科領域における希少疾患・少数クラスのデータ不足を解決するために、テキストプロンプトから病変を保持した多モーダル眼科画像を生成する **EyeDiff** を提案している。EyeDiffは、Stable Diffusion v1.5を基盤としたLatent Diffusion Modelであり、VAE、CLIP Text Encoder、U-Net、Cross-attentionを用いて、テキスト条件付きで眼科画像を生成する。
 
@@ -16,9 +20,9 @@ EyeDiffは、8データセット・42,048画像を用いて開発され、14種�
 
 ## スライド構成
 
-本発表は、10〜15分の英文抄読会を想定し、全15枚で構成する。  
+本発表は、10〜15分の英文抄読会を想定し、全16枚で構成する。  
 
-構成は「背景 → 目的 → 方法 → 結果 → 結論」の流れとし、EyeDiffの研究背景、モデル構造、評価設計、生成画像の品質評価、下流分類性能の改善までを順に説明する。
+構成は「背景 → 目的 → 方法 → 結果 → 結論」の流れとし、EyeDiffの研究背景、モデル構造、評価設計、評価指標（AUROC・AUPR）の補足、生成画像の品質評価、下流分類性能の改善までを順に説明する。
 
 ### Slide 1：タイトル
 
@@ -370,7 +374,58 @@ EyeDiffが生成した合成眼科画像を、生成画像そのものの品質�
 
 ---
 
-### Slide 11：結果：生成画像の品質評価
+### Slide 11：方法：評価設計の補足（AUROC・AUPR）
+
+**主張**  
+
+混合行列から AUROC・AUPR がどう定義されるかを示し、希少疾患評価で AUPR を重視する理由を説明する。
+
+**使用する図**
+
+混合行列（左）＋ ROC曲線・AUROC（中）＋ PR曲線・AUPR（右）。
+
+**説明ポイント**
+
+- TP/FP/FN/TN から感度・適合率・偽陽性率を定義
+- AUROC：ROC曲線（感度 vs 偽陽性率）の下面積
+- AUPR：PR曲線（適合率 vs 再現率）の下面積。少数クラス・希少疾患に敏感
+- 本論文は両指標を併記し、結果では AUPR の改善を重視して読む
+
+---
+
+### Slide 12：結果：生成画像の具体例
+
+**主張**  
+
+テキストプロンプトで指定された病変所見が、生成画像上に反映されている（結果パートは**具体例から入る**）。
+
+**使用する図**
+
+Figure 2風の3列構成。
+
+| Text Prompt | Generated Image | Real Reference |
+
+|---|---|---|
+
+| color fundus, glaucoma | 生成画像 | 実画像参照（乳頭陥凹） |
+
+| color fundus, severe diabetic retinopathy | 生成画像 | 実画像参照（出血・白斑） |
+
+| OCT, vitreomacular traction, macular hole | 生成画像 | 実画像参照（牽引・円孔） |
+
+| OCT, macular edema, retinal vein occlusion | 生成画像 | 実画像参照（黄斑浮腫） |
+
+**説明ポイント**
+
+- 黄色矢印は病変・臨床所見の位置を示す
+
+- 生成画像と実画像参照を比較することで、病変保持性を視覚的に確認できる
+
+- 次スライド（Slide 13）で VQAScore・Turing test により定量化する
+
+---
+
+### Slide 13：結果：生成画像の品質評価
 
 **主張**  
 
@@ -404,47 +459,15 @@ EyeDiff生成画像は、一定のテキスト整合性と医学的リアリテ�
 
 **説明ポイント**
 
-- VQAScoreによりテキストと生成画像の整合性を評価している
-
-- Turing testでは、生成画像が実画像と誤認された割合を示している
+- Slide 12 の具体例を受けて、客観・主観指標で品質を補強する
 
 - 一方で、色調、病変境界、ノイズなどの違和感も残っている
-
----
-
-### Slide 12：結果：生成画像の具体例
-
-**主張**  
-
-テキストプロンプトで指定された病変所見が、生成画像上に反映されている。
-
-**使用する図**
-
-Figure 2風の3列構成。
-
-| Text Prompt | Generated Image | Real Reference |
-
-|---|---|---|
-
-| color fundus, glaucoma | 生成画像 | 実画像参照 |
-
-| color fundus, severe diabetic retinopathy | 生成画像 | 実画像参照 |
-
-| OCT, vitreomacular traction, macular hole | 生成画像 | 実画像参照 |
-
-| OCT, macular edema, retinal vein occlusion | 生成画像 | 実画像参照 |
-
-**説明ポイント**
-
-- 黄色矢印は病変・臨床所見の位置を示す
-
-- 生成画像と実画像参照を比較することで、病変保持性を視覚的に確認できる
 
 - Figure 2では、視神経乳頭陥凹拡大、糖尿病網膜症の出血や白斑、黄斑円孔、黄斑浮腫などが例示されている
 
 ---
 
-### Slide 13：結果：下流分類性能の改善
+### Slide 14：結果：下流分類性能の改善
 
 **主張**  
 
@@ -484,7 +507,7 @@ EyeDiff生成画像の追加により、希少疾患を含むデータセット�
 
 ---
 
-### Slide 14：結果：少数クラス・希少疾患での改善
+### Slide 15：結果：少数クラス・希少疾患での改善
 
 **主張**  
 
@@ -516,7 +539,7 @@ EyeDiff生成画像の追加により、希少疾患を含むデータセット�
 
 ---
 
-### Slide 15：結論
+### Slide 16：結言
 
 **主張**  
 
